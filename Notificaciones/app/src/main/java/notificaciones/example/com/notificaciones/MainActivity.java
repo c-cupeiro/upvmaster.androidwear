@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 Notification notificacion = new NotificationCompat.Builder(MainActivity.this)
                         .setSmallIcon(R.mipmap.ic_launcher).setContentTitle("Título").setContentText("Notificación Android Wear")
                         .setContentIntent(intencionPendienteMapa)
-                        .addAction(android.R.drawable.ic_menu_call, "llamar", intencionPendientetLlamar)
+                        .addAction(R.mipmap.ic_action_call, "llamar", intencionPendientetLlamar)
                         .build();
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
                 notificationManager.notify(notificacionId, notificacion);
