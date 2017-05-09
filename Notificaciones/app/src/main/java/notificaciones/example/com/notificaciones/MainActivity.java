@@ -24,10 +24,15 @@ public class MainActivity extends AppCompatActivity {
                 // Creamos intención pendiente
                 Intent intencionMapa = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=universidad+politecnica+valencia"));
                 PendingIntent intencionPendienteMapa = PendingIntent.getActivity(MainActivity.this, 0, intencionMapa, 0);
+                //Action llamar
+                Intent intencionLlamar = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:555123456"));
+                PendingIntent intencionPendientetLlamar = PendingIntent.getActivity(MainActivity.this, 0, intencionLlamar, 0);
+
                 int notificacionId = 001;
                 Notification notificacion = new NotificationCompat.Builder(MainActivity.this)
                         .setSmallIcon(R.mipmap.ic_launcher).setContentTitle("Título").setContentText("Notificación Android Wear")
                         .setContentIntent(intencionPendienteMapa)
+                        .addAction(android.R.drawable.ic_menu_call, "llamar", intencionPendientetLlamar)
                         .build();
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
                 notificationManager.notify(notificacionId, notificacion);
