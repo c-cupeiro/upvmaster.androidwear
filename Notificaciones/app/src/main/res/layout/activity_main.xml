@@ -9,4 +9,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Crear Notificación" />
+
+    <Button
+        android:id="@+id/boton_voz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notificación con respuesta" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Respuesta por voz:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textViewRespuesta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="..."
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 </LinearLayout>
