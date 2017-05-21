@@ -17,6 +17,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    final static String MI_GRUPO_DE_NOTIFIC = "mi_grupo_de_notific";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender()
                         .setHintHideIcon(true).setBackground(BitmapFactory.decodeResource(getResources(), R.drawable.escudo_upv)).addActions(acciones)
                         //.addPage(notificacionPg2);
-                    .addPages(lista_paginas);
+                        .addPages(lista_paginas);
 
                 int notificacionId = 001;
                 Notification notificacion = new NotificationCompat.Builder(MainActivity.this)
@@ -76,9 +78,19 @@ public class MainActivity extends AppCompatActivity {
                         //.setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.escudo_upv))
                         .extend(wearableExtender)
                         //.setStyle(new NotificationCompat.BigTextStyle().bigText(s + s + s + s))
+                        .setGroup(MI_GRUPO_DE_NOTIFIC)
                         .build();
+
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
                 notificationManager.notify(notificacionId, notificacion);
+
+                int idNotificacion2 = 002;
+                Notification notificacion2 = new NotificationCompat.Builder(MainActivity.this).setContentTitle("Nueva Conferencia")
+                        .setContentText("Los neutrinos").setSmallIcon(R.mipmap.ic_action_mail_add)
+                        .setGroup(MI_GRUPO_DE_NOTIFIC).build();
+                notificationManager.notify(idNotificacion2, notificacion2);
+
+
             }
         });
     }
