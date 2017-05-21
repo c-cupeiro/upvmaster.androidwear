@@ -3,6 +3,7 @@ package notificaciones.example.com.notificaciones;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         .addAction(R.mipmap.ic_action_call, "llamar", intencionPendientetLlamar)
                         //.extend(new NotificationCompat.WearableExtender().addAction( accion))
                         .extend(new NotificationCompat.WearableExtender().addActions(acciones))
+                        .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.escudo_upv))
                         .build();
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
                 notificationManager.notify(notificacionId, notificacion);
