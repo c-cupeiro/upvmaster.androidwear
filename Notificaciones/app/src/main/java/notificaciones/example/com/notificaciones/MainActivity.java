@@ -37,10 +37,15 @@ public class MainActivity extends AppCompatActivity {
                         "llamar Wear", intencionPendientetLlamar).build();
 
                 //Creamos una lista de acciones
-                List<NotificationCompat.Action> acciones = new ArrayList<NotificationCompat.Action>(); acciones.add(accion);
+                List<NotificationCompat.Action> acciones = new ArrayList<NotificationCompat.Action>();
+                acciones.add(accion);
                 acciones.add(new NotificationCompat.Action(R.mipmap.ic_action_locate, "Ver mapa", intencionPendienteMapa));
 
-                String s="Texto largo con descripción detallada de la notificación. ";
+                String s = "Texto largo con descripción detallada de la notificación. ";
+
+                // Creamos un WearableExtender para añadir funcionalidades para wearable
+                NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender()
+                        .setHintHideIcon(true).setBackground(BitmapFactory.decodeResource(getResources(), R.drawable.escudo_upv));
 
                 int notificacionId = 001;
                 Notification notificacion = new NotificationCompat.Builder(MainActivity.this)
@@ -48,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
                         .setContentIntent(intencionPendienteMapa)
                         .addAction(R.mipmap.ic_action_call, "llamar", intencionPendientetLlamar)
                         //.extend(new NotificationCompat.WearableExtender().addAction( accion))
-                        .extend(new NotificationCompat.WearableExtender().addActions(acciones))
-                        .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.escudo_upv))
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(s+s+s+s))
+                        //.extend(new NotificationCompat.WearableExtender().addActions(acciones))
+                        //.setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.escudo_upv))
+                        .extend(wearableExtender)
+                        //.setStyle(new NotificationCompat.BigTextStyle().bigText(s + s + s + s))
                         .build();
                 NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
                 notificationManager.notify(notificacionId, notificacion);
