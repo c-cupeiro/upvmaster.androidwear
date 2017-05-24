@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Creamos un BigTextStyle para la segunda página
                 NotificationCompat.BigTextStyle terceraPg = new NotificationCompat.BigTextStyle();
-                segundaPg.setBigContentTitle("Página 3").bigText("Más texto aún.");
+                terceraPg.setBigContentTitle("Página 3").bigText("Más texto aún.");
                 // Creamos una notification para la segunda página
                 Notification notificacionPg3 = new NotificationCompat.Builder(MainActivity.this).setStyle(terceraPg).build();
                 List lista_paginas = new ArrayList();
