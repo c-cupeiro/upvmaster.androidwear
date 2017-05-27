@@ -24,10 +24,13 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Integer tag = (Integer) v.getTag();
-                Log.i("ClickWear","Pulsado tag -> "+tag);
+                Log.i("ClickWear", "Pulsado tag -> " + tag);
                 switch (tag) {
                     case 1:
                         startActivity(new Intent(MainActivity.this, Confirmacion.class));
+                        break;
+                    case 4:
+                        startActivity(new Intent(MainActivity.this, Pasos.class));
                         break;
                 }
             }
@@ -36,6 +39,7 @@ public class MainActivity extends Activity {
         lista.setCenterEdgeItems(true);
         lista.setLayoutManager(new MyChildLayoutManager(this));
         lista.setCircularScrollingGestureEnabled(true);
-        lista.setScrollDegreesPerScreen(180); lista.setBezelWidth(0.5f);
+        lista.setScrollDegreesPerScreen(180);
+        lista.setBezelWidth(0.5f);
     }
 }
