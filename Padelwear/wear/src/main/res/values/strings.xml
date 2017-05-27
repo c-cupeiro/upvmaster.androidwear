@@ -2,4 +2,5 @@
     <string name="app_name">Padel wear</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
+    <string name="swipe.lorem">Lorem ipsum dolor sit amet, consectetur adipis-cing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ali-qua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
 </resources>
