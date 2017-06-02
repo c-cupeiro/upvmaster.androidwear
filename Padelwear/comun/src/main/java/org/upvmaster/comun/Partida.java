@@ -1,4 +1,4 @@
-package com.example.comun;
+package org.upvmaster.comun;
 
 import java.util.Vector;
 

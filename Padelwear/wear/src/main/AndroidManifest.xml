@@ -3,6 +3,7 @@
     package="org.upvmaster.padelwear">
 
     <uses-feature android:name="android.hardware.type.watch" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +25,7 @@
         <activity android:name=".Pasos" />
         <activity android:name=".CuentaAtras" />
         <activity android:name=".SwipeDismiss" />
+        <activity android:name=".Contador"  android:theme="@style/AppThemeNoSwipeToDismiss"/>
     </application>
 
 </manifest>

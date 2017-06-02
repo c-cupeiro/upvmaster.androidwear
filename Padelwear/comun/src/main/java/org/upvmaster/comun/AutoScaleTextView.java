@@ -1,4 +1,4 @@
-package com.example.comun;
+package org.upvmaster.comun;
 
 import android.content.Context;
 import android.graphics.Paint;

@@ -1,4 +1,4 @@
-package com.example.comun;
+package org.upvmaster.comun;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 /**
- * Created by Jesús Tomás on 04/05/2015.
+ * Created by Jesï¿½s Tomï¿½s on 04/05/2015.
  */
 public class DireccionesGestureDetector extends GestureDetector {
 
