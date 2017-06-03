@@ -2,29 +2,39 @@ package org.upvmaster.padelwear;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Carlos on 02/06/2017.
  */
 
-public class Contador extends Activity {
+public class Contador extends WearableActivity {
     private org.upvmaster.comun.Partida partida;
-    private TextView misPuntos, misJuegos, misSets, susPuntos, susJuegos, susSets;
+    private TextView misPuntos, misJuegos, misSets, susPuntos, susJuegos, susSets, hora;
     private DismissOverlayView dismissOverlay;
     private Vibrator vibrador;
     private long[] vibrEntrada = {0l, 500};
     private long[] vibrDeshacer = {0l, 500, 500, 500};
 
+    private Typeface fuenteNormal = Typeface.create("sans-serif", 0);
+    private Typeface fuenteFina = Typeface.create("sans-serif-thin", 0);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setAmbientEnabled();
         setContentView(R.layout.contador);
         partida = new org.upvmaster.comun.Partida();
         vibrador = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
@@ -34,6 +44,7 @@ public class Contador extends Activity {
         susJuegos = (TextView) findViewById(R.id.susJuegos);
         misSets = (TextView) findViewById(R.id.misSets);
         susSets = (TextView) findViewById(R.id.susSets);
+        hora = (TextView) findViewById(R.id.hora);
         dismissOverlay = (DismissOverlayView) findViewById(R.id.dismiss_overlay);
         dismissOverlay.setIntroText("Para salir de la aplicación, haz una pulsación larga");
         dismissOverlay.showIntroIfNecessary();
@@ -122,6 +133,55 @@ public class Contador extends Activity {
         susJuegos.setText(partida.getSusJuegos());
         misSets.setText(partida.getMisSets());
         susSets.setText(partida.getSusSets());
+    }
+
+    @Override
+    public void onEnterAmbient(Bundle ambientDetails) {
+        super.onEnterAmbient(ambientDetails);
+        hora.setVisibility(View.VISIBLE);
+
+        misPuntos.setTypeface(fuenteFina);
+        misPuntos.getPaint().setAntiAlias(false);
+        misJuegos.setTypeface(fuenteFina);
+        misJuegos.getPaint().setAntiAlias(false);
+        misSets.setTypeface(fuenteFina);
+        misSets.getPaint().setAntiAlias(false);
+        //Suyos
+        susPuntos.setTypeface(fuenteFina);
+        susPuntos.getPaint().setAntiAlias(false);
+        susJuegos.setTypeface(fuenteFina);
+        susJuegos.getPaint().setAntiAlias(false);
+        susSets.setTypeface(fuenteFina);
+        susSets.getPaint().setAntiAlias(false);
+    }
+
+    @Override
+    public void onExitAmbient() {
+        super.onExitAmbient();
+        hora.setVisibility(View.GONE);
+
+        misPuntos.setTypeface(fuenteNormal);
+        misPuntos.getPaint().setAntiAlias(true);
+        misJuegos.setTypeface(fuenteNormal);
+        misJuegos.getPaint().setAntiAlias(true);
+        misSets.setTypeface(fuenteNormal);
+        misSets.getPaint().setAntiAlias(true);
+        //Suyos
+        susPuntos.setTypeface(fuenteNormal);
+        susPuntos.getPaint().setAntiAlias(true);
+        susJuegos.setTypeface(fuenteNormal);
+        susJuegos.getPaint().setAntiAlias(true);
+        susSets.setTypeface(fuenteNormal);
+        susSets.getPaint().setAntiAlias(true);
+    }
+
+    @Override
+    public void onUpdateAmbient() {
+        super.onUpdateAmbient();
+        // Actualizar contenido
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        hora.setText(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
     }
 
 }
