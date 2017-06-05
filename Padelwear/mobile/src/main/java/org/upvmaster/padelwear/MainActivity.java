@@ -19,7 +19,7 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String WEAR_ARRANCAR_ACTIVIDAD = "/arrancar_actividad";
+    private static final String WEAR_ARRANCAR_ACTIVIDAD = "/arrancar_actividad_wear";
     private GoogleApiClient apiClient;
 
     @Override

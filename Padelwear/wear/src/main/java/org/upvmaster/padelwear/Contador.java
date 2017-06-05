@@ -8,10 +8,18 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.wearable.activity.WearableActivity;
 import android.support.wearable.view.DismissOverlayView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.Wearable;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +29,9 @@ import java.util.Date;
  */
 
 public class Contador extends WearableActivity {
+
+    private static final String WEAR_ARRANCAR_ACTIVIDAD = "/arrancar_actividad_movil";
+    private GoogleApiClient apiClient;
     private org.upvmaster.comun.Partida partida;
     private TextView misPuntos, misJuegos, misSets, susPuntos, susJuegos, susSets, hora;
     private DismissOverlayView dismissOverlay;
@@ -36,6 +47,8 @@ public class Contador extends WearableActivity {
         super.onCreate(savedInstanceState);
         setAmbientEnabled();
         setContentView(R.layout.contador);
+        apiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
+        mandarMensaje(WEAR_ARRANCAR_ACTIVIDAD, "");
         partida = new org.upvmaster.comun.Partida();
         vibrador = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         misPuntos = (TextView) findViewById(R.id.misPuntos);
@@ -182,6 +195,39 @@ public class Contador extends WearableActivity {
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         hora.setText(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        apiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        if (apiClient != null && apiClient.isConnected()) {
+            apiClient.disconnect();
+        }
+        super.onStop();
+    }
+
+    private void mandarMensaje(final String path, final String texto) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NodeApi.GetConnectedNodesResult nodos = Wearable.NodeApi.getConnectedNodes(apiClient).await();
+                for (Node nodo : nodos.getNodes()) {
+                    Wearable.MessageApi.sendMessage(apiClient, nodo.getId(), path, texto.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
+                        @Override
+                        public void onResult(MessageApi.SendMessageResult resultado) {
+                            if (!resultado.getStatus().isSuccess()) {
+                                Log.e("sincronizacion", "Error al mandar mensaje. Código:" + resultado.getStatus().getStatusCode());
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
 }
