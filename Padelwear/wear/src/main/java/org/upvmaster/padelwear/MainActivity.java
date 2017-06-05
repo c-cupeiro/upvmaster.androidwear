@@ -21,7 +21,7 @@ import com.google.android.gms.wearable.Wearable;
 public class MainActivity extends Activity {
 
     // Elementos a mostrar en la lista
-    String[] elementos = {"Partida", "Terminar partida", "Historial", "Notificación", "Pasos", "Pulsaciones", "Terminar partida"};
+    String[] elementos = {"Partida", "Terminar partida", "Historial", "Jugadores", "Pasos", "Pulsaciones", "Terminar partida"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,9 @@ public class MainActivity extends Activity {
                         break;
                     case 2:
                         startActivity(new Intent(MainActivity.this, Historial.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent(MainActivity.this, Jugadores.class));
                         break;
                     case 4:
                         startActivity(new Intent(MainActivity.this, Pasos.class));
