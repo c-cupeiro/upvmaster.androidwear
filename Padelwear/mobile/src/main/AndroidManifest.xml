@@ -3,6 +3,8 @@
     package="org.upvmaster.padelwear">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Contador" />
+
         <service android:name=".ServicioEscuchador">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
@@ -37,6 +40,13 @@
                     android:scheme="wear" />
             </intent-filter>
         </service>
+        <receiver
+            android:name=".WearReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.notificaciones.ACTION_DEMAND" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
