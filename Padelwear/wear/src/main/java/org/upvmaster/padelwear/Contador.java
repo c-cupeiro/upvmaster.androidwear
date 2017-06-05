@@ -19,16 +19,28 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
+import com.google.android.gms.wearable.PutDataMapRequest;
+import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import static android.R.attr.y;
 
 /**
  * Created by Carlos on 02/06/2017.
  */
 
 public class Contador extends WearableActivity {
+    private static final String WEAR_PUNTUACION = "/puntuacion";
+    private static final String KEY_MIS_PUNTOS = "com.example.padel.key.mis_puntos";
+    private static final String KEY_MIS_JUEGOS = "com.example.padel.key.mis_juegos";
+    private static final String KEY_MIS_SETS = "com.example.padel.key.mis_sets";
+    private static final String KEY_SUS_PUNTOS = "com.example.padel.key.sus_puntos";
+    private static final String KEY_SUS_JUEGOS = "com.example.padel.key.sus_juegos";
+    private static final String KEY_SUS_SETS = "com.example.padel.key.sus_sets";
+
     public static final String INIT_FROM_MOBILE = "init_from_mobile";
     private static final String WEAR_ARRANCAR_ACTIVIDAD = "/arrancar_actividad_movil";
     private GoogleApiClient apiClient;
@@ -48,7 +60,7 @@ public class Contador extends WearableActivity {
         setAmbientEnabled();
         setContentView(R.layout.contador);
         apiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
-        if(!getIntent().getBooleanExtra(INIT_FROM_MOBILE,false))
+        if (!getIntent().getBooleanExtra(INIT_FROM_MOBILE, false))
             mandarMensaje(WEAR_ARRANCAR_ACTIVIDAD, "");
         partida = new org.upvmaster.comun.Partida();
         vibrador = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
@@ -72,6 +84,7 @@ public class Contador extends WearableActivity {
                             partida.rehacerPunto();
                             vibrador.vibrate(vibrDeshacer, -1);
                             actualizaNumeros();
+                            sincronizaDatos();
                             return true;
                         }
 
@@ -80,6 +93,7 @@ public class Contador extends WearableActivity {
                             partida.deshacerPunto();
                             vibrador.vibrate(vibrDeshacer, -1);
                             actualizaNumeros();
+                            sincronizaDatos();
                             return true;
                         }
 
@@ -102,6 +116,7 @@ public class Contador extends WearableActivity {
                             partida.puntoPara(true);
                             vibrador.vibrate(vibrEntrada, -1);
                             actualizaNumeros();
+                            sincronizaDatos();
                             return true;
                         }
 
@@ -124,6 +139,7 @@ public class Contador extends WearableActivity {
                             partida.puntoPara(false);
                             vibrador.vibrate(vibrEntrada, -1);
                             actualizaNumeros();
+                            sincronizaDatos();
                             return true;
                         }
 
@@ -230,5 +246,19 @@ public class Contador extends WearableActivity {
             }
         }).start();
     }
+
+    private void sincronizaDatos() {
+        Log.d("Padel Wear", "Sincronizando");
+        PutDataMapRequest putDataMapReq = PutDataMapRequest.create(WEAR_PUNTUACION);
+        putDataMapReq.getDataMap().putByte(KEY_MIS_PUNTOS, partida.getMisPuntosByte());
+        putDataMapReq.getDataMap().putByte(KEY_MIS_JUEGOS, partida.getMisJuegosByte());
+        putDataMapReq.getDataMap().putByte(KEY_MIS_SETS, partida.getMisSetsByte());
+        putDataMapReq.getDataMap().putByte(KEY_SUS_PUNTOS, partida.getSusPuntosByte());
+        putDataMapReq.getDataMap().putByte(KEY_SUS_JUEGOS, partida.getSusJuegosByte());
+        putDataMapReq.getDataMap().putByte(KEY_SUS_SETS, partida.getSusSetsByte());
+        PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
+        Wearable.DataApi.putDataItem(apiClient, putDataReq);
+    }
+
 
 }
