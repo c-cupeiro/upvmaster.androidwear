@@ -19,8 +19,7 @@ import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String WEAR_ARRANCAR_ACTIVIDAD = "/arrancar_actividad_wear";
-    private GoogleApiClient apiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        apiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
-        mandarMensaje(WEAR_ARRANCAR_ACTIVIDAD, "");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,20 +36,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        apiClient.connect();
-    }
-
-    @Override
-    protected void onStop() {
-        if (apiClient != null && apiClient.isConnected()) {
-            apiClient.disconnect();
-        }
-        super.onStop();
     }
 
     @Override
@@ -78,25 +62,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void mandarMensaje(final String path, final String texto) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                NodeApi.GetConnectedNodesResult nodos = Wearable.NodeApi.getConnectedNodes(apiClient).await();
-                for (Node nodo : nodos.getNodes()) {
-                    Wearable.MessageApi.sendMessage(apiClient, nodo.getId(), path, texto.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
-                        @Override
-                        public void onResult(MessageApi.SendMessageResult resultado) {
-                            if (!resultado.getStatus().isSuccess()) {
-                                Log.e("sincronizacion", "Error al mandar mensaje. Código:" + resultado.getStatus().getStatusCode());
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
     }
 
 }

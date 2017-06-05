@@ -29,7 +29,7 @@ import java.util.Date;
  */
 
 public class Contador extends WearableActivity {
-
+    public static final String INIT_FROM_MOBILE = "init_from_mobile";
     private static final String WEAR_ARRANCAR_ACTIVIDAD = "/arrancar_actividad_movil";
     private GoogleApiClient apiClient;
     private org.upvmaster.comun.Partida partida;
@@ -48,7 +48,8 @@ public class Contador extends WearableActivity {
         setAmbientEnabled();
         setContentView(R.layout.contador);
         apiClient = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
-        mandarMensaje(WEAR_ARRANCAR_ACTIVIDAD, "");
+        if(!getIntent().getBooleanExtra(INIT_FROM_MOBILE,false))
+            mandarMensaje(WEAR_ARRANCAR_ACTIVIDAD, "");
         partida = new org.upvmaster.comun.Partida();
         vibrador = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
         misPuntos = (TextView) findViewById(R.id.misPuntos);
