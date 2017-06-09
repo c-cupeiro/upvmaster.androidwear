@@ -159,6 +159,7 @@ public class ServicioMusicBrowserTest extends MediaBrowserService {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 mediaPlayer.seekTo(0);
+                mSession.setPlaybackState(buildState(PlaybackState.STATE_STOPPED));
             }
         });
         mPlayer.prepareAsync();
@@ -201,7 +202,7 @@ public class ServicioMusicBrowserTest extends MediaBrowserService {
                         .putString(MediaMetadata.METADATA_KEY_TITLE, pista.getTitle())
                         .putString(MediaMetadata.METADATA_KEY_ARTIST, pista.getArtist())
                         .putString(MediaMetadata.METADATA_KEY_ALBUM_ART_URI, pista.getImage())
-                        .putLong(MediaMetadata.METADATA_KEY_DURATION, pista.getDuration()).build());
+                        .putLong(MediaMetadata.METADATA_KEY_DURATION, pista.getDuration()*1000).build());
             }
         }
     };
