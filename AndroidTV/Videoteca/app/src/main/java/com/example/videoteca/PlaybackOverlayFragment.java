@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.example.androidtvapp;
+package com.example.videoteca;
 
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
