@@ -38,7 +38,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".PlaybackOverlayActivity" />
-
+        <activity android:name=".SearchActivity" android:exported="true" />
         <receiver
             android:name=".BootupActivity"
             android:enabled="true"
