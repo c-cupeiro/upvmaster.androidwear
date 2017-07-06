@@ -1,4 +1,4 @@
-package com.example.parejas;
+package com.example.parejas_CupeiroCarlos;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
